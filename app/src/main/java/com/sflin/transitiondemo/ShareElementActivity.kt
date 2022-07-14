@@ -5,10 +5,10 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityOptionsCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import android.view.View
 import com.sflin.transitiondemo.adapter.ShareElementListAdapter
 import kotlinx.android.synthetic.main.activity_share_element.*
@@ -41,7 +41,7 @@ class ShareElementActivity : AppCompatActivity() {
             }
         })
 
-        list.layoutManager = GridLayoutManager(this,2)
+        list.layoutManager = GridLayoutManager(this, 2)
 
         list.adapter = mAdapter
     }
@@ -58,9 +58,9 @@ class ShareElementActivity : AppCompatActivity() {
     private fun initClickListener(){
 
         img5.setOnClickListener{
-            var one = android.support.v4.util.Pair<View, String>(img5, "shareImg5")
+            var one = androidx.core.util.Pair<View, String>(img5, "shareImg5")
 
-            var two = android.support.v4.util.Pair<View, String>(img6, "shareImg6")
+            var two = androidx.core.util.Pair<View, String>(img6, "shareImg6")
 
             var pairs = arrayOf(one,two)
 
@@ -69,9 +69,9 @@ class ShareElementActivity : AppCompatActivity() {
                     transitionActivityOptions.toBundle())
         }
         img6.setOnClickListener{
-            var one = android.support.v4.util.Pair<View, String>(img5, "shareImg5")
+            var one = androidx.core.util.Pair<View, String>(img5, "shareImg5")
 
-            var two = android.support.v4.util.Pair<View, String>(img6, "shareImg6")
+            var two = androidx.core.util.Pair<View, String>(img6, "shareImg6")
 
             var pairs = arrayOf(one,two)
 

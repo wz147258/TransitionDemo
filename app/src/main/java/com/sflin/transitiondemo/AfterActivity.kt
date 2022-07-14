@@ -4,11 +4,11 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import com.sflin.transitiondemo.adapter.EffectListAdapter
 import com.sflin.transitiondemo.model.Effect
