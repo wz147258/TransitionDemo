@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_after_two.*
 
 class AfterTwoActivity : AppCompatActivity() {
 
-    private lateinit var effect:Effect
+    private lateinit var effect: Effect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,37 +25,38 @@ class AfterTwoActivity : AppCompatActivity() {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun init(){
+    private fun init() {
         effect = intent.getSerializableExtra("effect") as Effect
 
-        when(effect.name){
-            "Explode" ->{
+        when (effect.name) {
+            "Explode" -> {
                 window.enterTransition = Explode()
                 window.exitTransition = Explode()
             }
-            "Slide" ->{
+            "Slide" -> {
                 window.enterTransition = Slide()
                 window.exitTransition = Slide()
             }
-            "Fade" ->{
+            "Fade" -> {
                 window.enterTransition = Fade()
                 window.exitTransition = Fade()
             }
         }
+        window.allowReturnTransitionOverlap
 
         Glide.with(this)
-                .load(effect.uri)
-                .apply(RequestOptions().skipMemoryCache(true))
-                .into(img)
+            .load(effect.uri)
+            .apply(RequestOptions().skipMemoryCache(true))
+            .into(img)
     }
 
-    private fun initClickListener(){
+    private fun initClickListener() {
 
     }
 
     override fun onBackPressed() {
-        when(effect.name){
-            "makeCustom" ->{
+        when (effect.name) {
+            "makeCustom" -> {
                 finish()
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 //                ActivityCompat.finishAfterTransition(this@AfterTwoActivity)

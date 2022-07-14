@@ -9,7 +9,6 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_after_two.*
 
 class ShareElementTwoActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share_element_two)
@@ -17,12 +16,12 @@ class ShareElementTwoActivity : AppCompatActivity() {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun init(){
-        var url = intent.getIntExtra("url",0)
+    private fun init() {
+        var url = intent.getIntExtra("url", 0)
 
         Glide.with(this)
-                .load(url)
-                .apply(RequestOptions().skipMemoryCache(true))
-                .into(img)
+            .load(url)
+            .apply(RequestOptions().skipMemoryCache(true))
+            .into(img)
     }
 }

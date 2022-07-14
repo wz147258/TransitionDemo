@@ -12,14 +12,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.sflin.transitiondemo.R
 import com.sflin.transitiondemo.model.Effect
 
-
-class EffectListAdapter(private val mContext: Context, private val mList: List<Effect>) : RecyclerView.Adapter<EffectListAdapter.ViewHolder>() {
+class EffectListAdapter(private val mContext: Context, private val mList: List<Effect>) :
+    RecyclerView.Adapter<EffectListAdapter.ViewHolder>() {
 
     private lateinit var mOnCallBack: OnCallBack
 
     interface OnCallBack {
 
-        fun onClick(effect: Effect,view: View)
+        fun onClick(effect: Effect, view: View)
     }
 
     fun setOnClickListener(mOnCallBack: OnCallBack) {
@@ -35,11 +35,11 @@ class EffectListAdapter(private val mContext: Context, private val mList: List<E
         val effect = mList[position]
         holder.mName.text = effect.name
         Glide.with(mContext)
-                .load(effect.uri)
-                .apply(RequestOptions().skipMemoryCache(true))
-                .into(holder.mImg)
+            .load(effect.uri)
+            .apply(RequestOptions().skipMemoryCache(true))
+            .into(holder.mImg)
         holder.mImg.setOnClickListener {
-            mOnCallBack.onClick(effect,holder.mImg)
+            mOnCallBack.onClick(effect, holder.mImg)
         }
     }
 

@@ -4,23 +4,23 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import android.view.View
 import com.sflin.transitiondemo.adapter.EffectListAdapter
 import com.sflin.transitiondemo.model.Effect
-import kotlinx.android.synthetic.main.activity_after.*
+import kotlinx.android.synthetic.main.activity_after.list
 import java.io.Serializable
 
 
 class AfterActivity : AppCompatActivity() {
 
-    private lateinit var mListData:ArrayList<Effect>
+    private lateinit var mListData: ArrayList<Effect>
 
-    private lateinit var mAdapter:EffectListAdapter
+    private lateinit var mAdapter: EffectListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,59 +28,66 @@ class AfterActivity : AppCompatActivity() {
         init()
     }
 
-    private fun init(){
+    private fun init() {
         initListData()
-        mAdapter = EffectListAdapter(this@AfterActivity,mListData)
+        mAdapter = EffectListAdapter(this@AfterActivity, mListData)
 
-        mAdapter.setOnClickListener(object :EffectListAdapter.OnCallBack{
+        mAdapter.setOnClickListener(object : EffectListAdapter.OnCallBack {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-            override fun onClick(effect: Effect,view: View) {
+            override fun onClick(effect: Effect, view: View) {
+                when (effect.name) {
+                    "makeCustom" -> {
+                        ActivityCompat.startActivity(
+                            this@AfterActivity, Intent(this@AfterActivity, AfterTwoActivity::class.java).apply {
 
-                when(effect.name){
-                    "makeCustom" ->{
-                        ActivityCompat.startActivity(this@AfterActivity,Intent(this@AfterActivity,AfterTwoActivity::class.java).apply {
+                                putExtra("effect", effect as Serializable)
 
-                            putExtra("effect",effect as Serializable)
-
-                        },ActivityOptionsCompat.makeCustomAnimation(this@AfterActivity,
-                                        android.R.anim.fade_in, android.R.anim.fade_out).toBundle())
+                            }, ActivityOptionsCompat.makeCustomAnimation(
+                                this@AfterActivity,
+                                android.R.anim.fade_in, android.R.anim.fade_out
+                            ).toBundle()
+                        )
                     }
-                    "makeScaleUp" ->{
-                        val options = ActivityOptionsCompat.makeScaleUpAnimation(view,view.width/2,
-                                view.height/2,0, 0)
+                    "makeScaleUp" -> {
+                        val options = ActivityOptionsCompat.makeScaleUpAnimation(
+                            view, view.width / 2,
+                            view.height / 2, 0, 0
+                        )
 
-                        ActivityCompat.startActivity(this@AfterActivity,Intent(this@AfterActivity,AfterTwoActivity::class.java).apply {
+                        ActivityCompat.startActivity(this@AfterActivity, Intent(this@AfterActivity, AfterTwoActivity::class.java).apply {
 
-                            putExtra("effect",effect as Serializable)
+                            putExtra("effect", effect as Serializable)
 
-                        },options.toBundle())
+                        }, options.toBundle())
                     }
-                    "makeThumbnailScaleUp" ->{
-                        var bitmap = BitmapFactory.decodeResource(resources,effect.uri)
-                        val options = ActivityOptionsCompat.makeThumbnailScaleUpAnimation(view, bitmap,
-                                view.width/2, view.height/2)
+                    "makeThumbnailScaleUp" -> {
+                        var bitmap = BitmapFactory.decodeResource(resources, effect.uri)
+                        val options = ActivityOptionsCompat.makeThumbnailScaleUpAnimation(
+                            view, bitmap,
+                            view.width / 2, view.height / 2
+                        )
 
-                        ActivityCompat.startActivity(this@AfterActivity,Intent(this@AfterActivity,AfterTwoActivity::class.java).apply {
+                        ActivityCompat.startActivity(this@AfterActivity, Intent(this@AfterActivity, AfterTwoActivity::class.java).apply {
 
-                            putExtra("effect",effect as Serializable)
+                            putExtra("effect", effect as Serializable)
 
-                        },options.toBundle())
+                        }, options.toBundle())
                     }
-                    "makeClipReveal" ->{
-                        val options = ActivityOptionsCompat.makeClipRevealAnimation(view,view.width/2,
-                                view.height/2,0, 0)
+                    "makeClipReveal" -> {
+                        val options = ActivityOptionsCompat.makeClipRevealAnimation(
+                            view, view.width / 2,
+                            view.height / 2, 0, 0
+                        )
 
-                        ActivityCompat.startActivity(this@AfterActivity,Intent(this@AfterActivity,AfterTwoActivity::class.java).apply {
+                        ActivityCompat.startActivity(this@AfterActivity, Intent(this@AfterActivity, AfterTwoActivity::class.java).apply {
 
-                            putExtra("effect",effect as Serializable)
+                            putExtra("effect", effect as Serializable)
 
-                        },options.toBundle())
+                        }, options.toBundle())
                     }
-                    else ->{
+                    else -> {
                         startActivity(Intent(this@AfterActivity, AfterTwoActivity::class.java).apply {
-
-                            putExtra("effect",effect as Serializable)
-
+                            putExtra("effect", effect as Serializable)
                         }, ActivityOptionsCompat.makeSceneTransitionAnimation(this@AfterActivity).toBundle())
                     }
                 }
@@ -88,23 +95,21 @@ class AfterActivity : AppCompatActivity() {
         })
 
         list.layoutManager = LinearLayoutManager(this)
-
         list.adapter = mAdapter
     }
 
-    private fun initListData(){
+    private fun initListData() {
         mListData = ArrayList()
-        mListData.add(getEffect("Explode",R.mipmap.img1))
-        mListData.add(getEffect("Slide",R.mipmap.img2))
-        mListData.add(getEffect("Fade",R.mipmap.img3))
-        mListData.add(getEffect("makeCustom",R.mipmap.img4))
-        mListData.add(getEffect("makeScaleUp",R.mipmap.img5))
-        mListData.add(getEffect("makeThumbnailScaleUp",R.mipmap.img6))
-        mListData.add(getEffect("makeClipReveal",R.mipmap.img1))
+        mListData.add(getEffect("Explode", R.mipmap.img1))
+        mListData.add(getEffect("Slide", R.mipmap.img2))
+        mListData.add(getEffect("Fade", R.mipmap.img3))
+        mListData.add(getEffect("makeCustom", R.mipmap.img4))
+        mListData.add(getEffect("makeScaleUp", R.mipmap.img5))
+        mListData.add(getEffect("makeThumbnailScaleUp", R.mipmap.img6))
+        mListData.add(getEffect("makeClipReveal", R.mipmap.img1))
     }
 
-    private fun getEffect(name:String,url:Int): Effect {
-
-        return Effect(name,url)
+    private fun getEffect(name: String, url: Int): Effect {
+        return Effect(name, url)
     }
 }
