@@ -42,7 +42,6 @@ class AfterTwoActivity : AppCompatActivity() {
                 window.exitTransition = Fade()
             }
         }
-        window.allowReturnTransitionOverlap
 
         Glide.with(this)
             .load(effect.uri)

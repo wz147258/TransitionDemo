@@ -28,4 +28,12 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:text="共享元素" />
+
+    <Button
+        android:id="@+id/share_element_2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:text="共享元素-MaterialContainerTransform" />
 </LinearLayout>

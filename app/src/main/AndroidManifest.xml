@@ -26,8 +26,10 @@
         <activity android:name=".AfterTwoActivity" />
 
         <activity android:name=".ShareElementActivity" />
+        <activity android:name=".ShareElementActivityV2" />
 
         <activity android:name=".ShareElementTwoActivity" />
+        <activity android:name=".ShareElementTwoActivityV2" />
 
         <activity android:name=".ShareElementThreeActivity" />
     </application>

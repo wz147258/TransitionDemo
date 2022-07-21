@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.after
 import kotlinx.android.synthetic.main.activity_main.before
 import kotlinx.android.synthetic.main.activity_main.share_element
+import kotlinx.android.synthetic.main.activity_main.share_element_2
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +24,9 @@ class MainActivity : AppCompatActivity() {
         }
         share_element.setOnClickListener {
             startActivity(Intent(this@MainActivity, ShareElementActivity::class.java))
+        }
+        share_element_2.setOnClickListener {
+            startActivity(Intent(this@MainActivity, ShareElementActivityV2::class.java))
         }
     }
 }
