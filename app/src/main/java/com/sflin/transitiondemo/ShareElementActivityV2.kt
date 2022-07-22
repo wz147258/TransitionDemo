@@ -14,6 +14,7 @@ import androidx.core.util.Pair
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.sflin.transitiondemo.adapter.ShareElementListAdapter
+import com.sflin.transitiondemo.utis.MySharedElementCallback
 import kotlinx.android.synthetic.main.activity_share_element.img5
 import kotlinx.android.synthetic.main.activity_share_element.img6
 import kotlinx.android.synthetic.main.activity_share_element.list
@@ -29,7 +30,9 @@ class ShareElementActivityV2 : AppCompatActivity() {
             window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
             // Attach a callback used to capture the shared elements from this Activity to be used
             // by the container transform transition
-            setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+            setEnterSharedElementCallback(MySharedElementCallback("A:Enter"))
+            setExitSharedElementCallback(MySharedElementCallback("A:Exit", MaterialContainerTransformSharedElementCallback()))
+
             // Keep system bars (status bar, navigation bar) persistent throughout the transition.
             window.sharedElementsUseOverlay = false
         }

@@ -2,9 +2,14 @@ package com.sflin.transitiondemo
 
 import android.annotation.TargetApi
 import android.app.ActivityOptions
+import android.app.SharedElementCallback
+import android.content.Context
 import android.content.Intent
+import android.graphics.Matrix
+import android.graphics.RectF
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +17,8 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sflin.transitiondemo.adapter.ShareElementListAdapter
+import com.sflin.transitiondemo.utis.LogUtils
+import com.sflin.transitiondemo.utis.MySharedElementCallback
 import kotlinx.android.synthetic.main.activity_share_element.img5
 import kotlinx.android.synthetic.main.activity_share_element.img6
 import kotlinx.android.synthetic.main.activity_share_element.list
@@ -23,6 +30,10 @@ class ShareElementActivity : AppCompatActivity() {
     private lateinit var mAdapter: ShareElementListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setEnterSharedElementCallback(MySharedElementCallback("A:Enter"))
+            setExitSharedElementCallback(MySharedElementCallback("A:Exit"))
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share_element)
         init()
@@ -88,5 +99,4 @@ class ShareElementActivity : AppCompatActivity() {
             )
         }
     }
-
 }

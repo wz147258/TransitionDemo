@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
+import com.sflin.transitiondemo.utis.MySharedElementCallback
 import kotlinx.android.synthetic.main.activity_after_two.*
 
 class ShareElementTwoActivityV2 : AppCompatActivity() {
@@ -23,7 +24,9 @@ class ShareElementTwoActivityV2 : AppCompatActivity() {
 
             findViewById<View>(android.R.id.content).transitionName = "shareImg"
 
-            setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+            setEnterSharedElementCallback(MySharedElementCallback("B:Enter", MaterialContainerTransformSharedElementCallback()))
+            setExitSharedElementCallback(MySharedElementCallback("B:Exit"))
+
             window.sharedElementEnterTransition = MaterialContainerTransform().apply {
                 addTarget(android.R.id.content)
             }

@@ -6,10 +6,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.sflin.transitiondemo.utis.MySharedElementCallback
 import kotlinx.android.synthetic.main.activity_after_two.*
 
 class ShareElementTwoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setEnterSharedElementCallback(MySharedElementCallback("B:Enter"))
+            setExitSharedElementCallback(MySharedElementCallback("B:Exit"))
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share_element_two)
         init()
