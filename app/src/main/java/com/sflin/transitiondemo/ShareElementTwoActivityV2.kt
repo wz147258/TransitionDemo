@@ -22,7 +22,7 @@ class ShareElementTwoActivityV2 : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
 
-            findViewById<View>(android.R.id.content).transitionName = "shareImg"
+            findViewById<View>(android.R.id.content).transitionName = intent.getStringExtra("transitionName")
 
             setEnterSharedElementCallback(MySharedElementCallback("B:Enter", MaterialContainerTransformSharedElementCallback()))
             setExitSharedElementCallback(MySharedElementCallback("B:Exit"))
@@ -38,7 +38,7 @@ class ShareElementTwoActivityV2 : AppCompatActivity() {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private fun init() {
-        var url = intent.getIntExtra("url", 0)
+        val url = intent.getIntExtra("url", 0)
 
         Glide.with(this)
             .load(url)

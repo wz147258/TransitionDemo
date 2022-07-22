@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sflin.transitiondemo.adapter.ShareElementListAdapter
 import com.sflin.transitiondemo.utis.LogUtils
@@ -47,11 +48,14 @@ class ShareElementActivity : AppCompatActivity() {
         mAdapter.setOnClickListener(object : ShareElementListAdapter.OnCallBack {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onClick(view: View, url: Int) {
-                startActivity(Intent(this@ShareElementActivity, ShareElementTwoActivity::class.java).apply {
-
-                    putExtra("url", url)
-
-                }, ActivityOptions.makeSceneTransitionAnimation(this@ShareElementActivity, view, "shareImg").toBundle())
+                val transitionName = ViewCompat.getTransitionName(view)
+                startActivity(
+                    Intent(this@ShareElementActivity, ShareElementTwoActivity::class.java).apply {
+                        putExtra("url", url)
+                        putExtra("transitionName", transitionName)
+                    },
+                    ActivityOptions.makeSceneTransitionAnimation(this@ShareElementActivity, view, transitionName).toBundle()
+                )
             }
         })
 
@@ -72,12 +76,9 @@ class ShareElementActivity : AppCompatActivity() {
     private fun initClickListener() {
 
         img5.setOnClickListener {
-            var one = Pair<View, String>(img5, "shareImg5")
-
-            var two = Pair<View, String>(img6, "shareImg6")
-
-            var pairs = arrayOf(one, two)
-            window.transitionBackgroundFadeDuration
+            val one = Pair<View, String>(img5, "shareImg5")
+            val two = Pair<View, String>(img6, "shareImg6")
+            val pairs = arrayOf(one, two)
 
             val transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *pairs)
             startActivity(
@@ -86,12 +87,9 @@ class ShareElementActivity : AppCompatActivity() {
             )
         }
         img6.setOnClickListener {
-            var one = Pair<View, String>(img5, "shareImg5")
-
-            var two = Pair<View, String>(img6, "shareImg6")
-
-            var pairs = arrayOf(one, two)
-
+            val one = Pair<View, String>(img5, "shareImg5")
+            val two = Pair<View, String>(img6, "shareImg6")
+            val pairs = arrayOf(one, two)
             val transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *pairs)
             startActivity(
                 Intent(this@ShareElementActivity, ShareElementThreeActivity::class.java),

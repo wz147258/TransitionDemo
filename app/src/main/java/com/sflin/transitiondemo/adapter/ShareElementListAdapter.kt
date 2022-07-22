@@ -1,23 +1,23 @@
 package com.sflin.transitiondemo.adapter
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.sflin.transitiondemo.R
 
-
-class ShareElementListAdapter(private val mContext: Context, private val mList: List<Int>) : RecyclerView.Adapter<ShareElementListAdapter.ViewHolder>() {
+class ShareElementListAdapter(private val mContext: Context, private val mList: List<Int>) :
+    RecyclerView.Adapter<ShareElementListAdapter.ViewHolder>() {
 
     private lateinit var mOnCallBack: OnCallBack
 
     interface OnCallBack {
-
-        fun onClick(view: View,url:Int)
+        fun onClick(view: View, url: Int)
     }
 
     fun setOnClickListener(mOnCallBack: OnCallBack) {
@@ -32,12 +32,13 @@ class ShareElementListAdapter(private val mContext: Context, private val mList: 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val url = mList[position]
         Glide.with(mContext)
-                .load(url)
-                .apply(RequestOptions().skipMemoryCache(true))
-                .into(holder.mImg)
+            .load(url)
+            .apply(RequestOptions().skipMemoryCache(true))
+            .into(holder.mImg)
         holder.mImg.setOnClickListener {
-            mOnCallBack.onClick(holder.mImg,url)
+            mOnCallBack.onClick(holder.mImg, url)
         }
+        ViewCompat.setTransitionName(holder.mImg, "shareImg${url}")
     }
 
     override fun getItemCount(): Int {

@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.sflin.transitiondemo.utis.MySharedElementCallback
@@ -22,8 +23,8 @@ class ShareElementTwoActivity : AppCompatActivity() {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private fun init() {
-        var url = intent.getIntExtra("url", 0)
-
+        val url = intent.getIntExtra("url", 0)
+        ViewCompat.setTransitionName(img, intent.getStringExtra("transitionName"))
         Glide.with(this)
             .load(url)
             .apply(RequestOptions().skipMemoryCache(true))
