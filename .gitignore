@@ -3,7 +3,7 @@
 .gradle
 .idea/
 /local.properties
-/gradle.properties
+#/gradle.properties
 .DS_Store
 /build
 /captures
