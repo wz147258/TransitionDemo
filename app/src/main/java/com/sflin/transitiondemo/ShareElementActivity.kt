@@ -10,13 +10,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sflin.transitiondemo.adapter.ShareElementListAdapter
 import com.sflin.transitiondemo.utis.MySharedElementCallback
-import kotlinx.android.synthetic.main.activity_share_element.img5
-import kotlinx.android.synthetic.main.activity_share_element.img6
-import kotlinx.android.synthetic.main.activity_share_element.list
+import kotlinx.android.synthetic.main.activity_share_element.*
 
 class ShareElementActivity : AppCompatActivity() {
 
@@ -42,13 +39,14 @@ class ShareElementActivity : AppCompatActivity() {
         mAdapter.setOnClickListener(object : ShareElementListAdapter.OnCallBack {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onClick(view: View, url: Int) {
-                val transitionName = ViewCompat.getTransitionName(view)
+                val transitionName = "shareImg${url}"
                 startActivity(
                     Intent(this@ShareElementActivity, ShareElementTwoActivity::class.java).apply {
                         putExtra("url", url)
                         putExtra("transitionName", transitionName)
                     },
-                    ActivityOptions.makeSceneTransitionAnimation(this@ShareElementActivity, view, transitionName).toBundle()
+                    ActivityOptions.makeSceneTransitionAnimation(this@ShareElementActivity, view, transitionName)
+                        .toBundle()
                 )
             }
         })

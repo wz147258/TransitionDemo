@@ -11,14 +11,11 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.sflin.transitiondemo.adapter.ShareElementListAdapter
 import com.sflin.transitiondemo.utis.MySharedElementCallback
-import kotlinx.android.synthetic.main.activity_share_element.img5
-import kotlinx.android.synthetic.main.activity_share_element.img6
-import kotlinx.android.synthetic.main.activity_share_element.list
+import kotlinx.android.synthetic.main.activity_share_element.*
 
 class ShareElementActivityV2 : AppCompatActivity() {
 
@@ -32,7 +29,11 @@ class ShareElementActivityV2 : AppCompatActivity() {
             // Attach a callback used to capture the shared elements from this Activity to be used
             // by the container transform transition
             setEnterSharedElementCallback(MySharedElementCallback("A:Enter"))
-            setExitSharedElementCallback(MySharedElementCallback("A:Exit", MaterialContainerTransformSharedElementCallback()))
+            setExitSharedElementCallback(
+                MySharedElementCallback(
+                    "A:Exit", MaterialContainerTransformSharedElementCallback()
+                )
+            )
 
             // Keep system bars (status bar, navigation bar) persistent throughout the transition.
             window.sharedElementsUseOverlay = false
@@ -50,13 +51,14 @@ class ShareElementActivityV2 : AppCompatActivity() {
         mAdapter.setOnClickListener(object : ShareElementListAdapter.OnCallBack {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onClick(view: View, url: Int) {
-                val transitionName = ViewCompat.getTransitionName(view)
+                val transitionName = "shareImg${url}"
                 startActivity(
                     Intent(this@ShareElementActivityV2, ShareElementTwoActivityV2::class.java).apply {
                         putExtra("url", url)
                         putExtra("transitionName", transitionName)
                     },
-                    ActivityOptions.makeSceneTransitionAnimation(this@ShareElementActivityV2, view, transitionName).toBundle()
+                    ActivityOptions.makeSceneTransitionAnimation(this@ShareElementActivityV2, view, transitionName)
+                        .toBundle()
                 )
             }
         })

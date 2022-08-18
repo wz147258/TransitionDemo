@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -38,7 +37,7 @@ class ShareElementListAdapter(private val mContext: Context, private val mList: 
         holder.mImg.setOnClickListener {
             mOnCallBack.onClick(holder.mImg, url)
         }
-        ViewCompat.setTransitionName(holder.mImg, "shareImg${url}")
+//        ViewCompat.setTransitionName(holder.mImg, "shareImg${url}")
     }
 
     override fun getItemCount(): Int {
