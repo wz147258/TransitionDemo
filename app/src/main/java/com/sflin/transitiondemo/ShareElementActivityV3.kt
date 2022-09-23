@@ -1,6 +1,5 @@
 package com.sflin.transitiondemo
 
-import android.annotation.TargetApi
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
@@ -9,21 +8,17 @@ import android.view.View
 import android.view.Window
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
-import com.sflin.transitiondemo.adapter.ShareElementListAdapter
+import com.sflin.transitiondemo.adapter.ShareElementListAdapterV3
+import com.sflin.transitiondemo.databinding.ActivityShareElementV3Binding
 import com.sflin.transitiondemo.utis.BaseSharedElementCallbackWrapper
-import kotlinx.android.synthetic.main.activity_share_element.img5
-import kotlinx.android.synthetic.main.activity_share_element.img6
-import kotlinx.android.synthetic.main.activity_share_element.list
 
-class ShareElementActivityV2 : AppCompatActivity() {
-
+class ShareElementActivityV3 : AppCompatActivity() {
+    private lateinit var binding: ActivityShareElementV3Binding
     private lateinit var mListData: ArrayList<Int>
 
-    private lateinit var mAdapter: ShareElementListAdapter
+    private lateinit var mAdapter: ShareElementListAdapterV3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -42,31 +37,31 @@ class ShareElementActivityV2 : AppCompatActivity() {
             window.sharedElementsUseOverlay = false
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_share_element)
+        binding = ActivityShareElementV3Binding.inflate(layoutInflater)
+        setContentView(binding.root)
         init()
-        initClickListener()
     }
 
     private fun init() {
         initListData()
-        mAdapter = ShareElementListAdapter(this@ShareElementActivityV2, mListData)
+        mAdapter = ShareElementListAdapterV3(this@ShareElementActivityV3, mListData)
 
-        mAdapter.setOnClickListener(object : ShareElementListAdapter.OnCallBack {
+        mAdapter.setOnClickListener(object : ShareElementListAdapterV3.OnCallBack {
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun onClick(view: View, url: Int) {
                 val transitionName = "shareImg${url}"
                 startActivity(
-                    Intent(this@ShareElementActivityV2, ShareElementTwoActivityV2::class.java).apply {
+                    Intent(this@ShareElementActivityV3, ShareElementTwoActivityV3::class.java).apply {
                         putExtra("url", url)
                         putExtra("transitionName", transitionName)
                     },
-                    ActivityOptions.makeSceneTransitionAnimation(this@ShareElementActivityV2, view, transitionName)
+                    ActivityOptions.makeSceneTransitionAnimation(this@ShareElementActivityV3, view, transitionName)
                         .toBundle()
                 )
             }
         })
-        list.layoutManager = GridLayoutManager(this, 2)
-        list.adapter = mAdapter
+        binding.list.layoutManager = GridLayoutManager(this, 2)
+        binding.list.adapter = mAdapter
     }
 
     private fun initListData() {
@@ -77,28 +72,5 @@ class ShareElementActivityV2 : AppCompatActivity() {
         mListData.add(R.mipmap.img4)
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun initClickListener() {
-        img5.setOnClickListener {
-            val one = Pair<View, String>(img5, "shareImg5")
-            val two = Pair<View, String>(img6, "shareImg6")
-            val pairs = arrayOf(one, two)
-            val transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *pairs)
-            startActivity(
-                Intent(this@ShareElementActivityV2, ShareElementThreeActivity::class.java),
-                transitionActivityOptions.toBundle()
-            )
-        }
-        img6.setOnClickListener {
-            val one = Pair<View, String>(img5, "shareImg5")
-            val two = Pair<View, String>(img6, "shareImg6")
-            val pairs = arrayOf(one, two)
-            val transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *pairs)
-            startActivity(
-                Intent(this@ShareElementActivityV2, ShareElementThreeActivity::class.java),
-                transitionActivityOptions.toBundle()
-            )
-        }
-    }
 
 }

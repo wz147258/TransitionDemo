@@ -10,18 +10,16 @@ import android.view.View
 import androidx.annotation.RequiresApi
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class MySharedElementCallback constructor(val tag: String, val oriCallback: SharedElementCallback? = null) : SharedElementCallback() {
+open class BaseSharedElementCallbackWrapper constructor(isEnter: Boolean, val tag: String, val oriCallback: SharedElementCallback? = null) :
+    BaseSharedElementCallback(isEnter) {
     override fun onSharedElementStart(
         sharedElementNames: MutableList<String>?,
         sharedElements: MutableList<View>?,
         sharedElementSnapshots: MutableList<View>?
     ) {
-        LogUtils.printInfoWithDefaultTag(tag)
-        if (oriCallback != null) {
-            oriCallback.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots)
-            return
-        }
+        oriCallback?.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots)
         super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots)
+        LogUtils.printInfoWithDefaultTag("$tag,state:${state.state2Str()},step:${step.step2Str()}")
     }
 
     override fun onSharedElementEnd(
@@ -29,12 +27,9 @@ class MySharedElementCallback constructor(val tag: String, val oriCallback: Shar
         sharedElements: MutableList<View>?,
         sharedElementSnapshots: MutableList<View>?
     ) {
-        LogUtils.printInfoWithDefaultTag(tag)
-        if (oriCallback != null) {
-            oriCallback.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
-            return
-        }
+        oriCallback?.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
         super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
+        LogUtils.printInfoWithDefaultTag("$tag,state:${state.state2Str()},step:${step.step2Str()}")
     }
 
     override fun onRejectSharedElements(rejectedSharedElements: MutableList<View>?) {

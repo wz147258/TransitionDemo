@@ -1,43 +1,44 @@
 package com.sflin.transitiondemo
 
 import android.annotation.TargetApi
-import android.app.Instrumentation
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.sflin.transitiondemo.utis.BaseSharedElementCallbackWrapper
 import kotlinx.android.synthetic.main.activity_after_two.img
 
-class ShareElementTwoActivity : AppCompatActivity() {
+class ShareElementTwoActivityV3 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setEnterSharedElementCallback(BaseSharedElementCallbackWrapper(true, "B:Enter"))
+            window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+
+            findViewById<View>(android.R.id.content).transitionName = intent.getStringExtra("transitionName")
+
+            setEnterSharedElementCallback(BaseSharedElementCallbackWrapper(true, "B:Enter", MaterialContainerTransformSharedElementCallback()))
             setExitSharedElementCallback(BaseSharedElementCallbackWrapper(false, "B:Exit"))
+
+            window.sharedElementEnterTransition = MaterialContainerTransform().apply {
+                addTarget(android.R.id.content)
+            }
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_share_element_two)
+        setContentView(R.layout.activity_share_element_two_v2)
         init()
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private fun init() {
         val url = intent.getIntExtra("url", 0)
-        ViewCompat.setTransitionName(img, intent.getStringExtra("transitionName"))
+
         Glide.with(this)
             .load(url)
             .apply(RequestOptions().skipMemoryCache(true))
             .into(img)
-    }
-
-    override fun onStop() {
-        // 解决切到后台后return动画不播放
-        // https://stackoverflow.com/questions/60876188/android-clears-activity-to-activity-shared-element-transition-exit-animation-aft/62381012#62381012
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !isFinishing) {
-            Instrumentation().callActivityOnSaveInstanceState(this, Bundle())
-        }
-        super.onStop()
     }
 }

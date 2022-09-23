@@ -68,6 +68,28 @@ public class LogUtils {
         if (tag == null) {
             tag = "null";
         }
+        final String outMsg = getTraceMsg(msg, depth);
+        if (TextUtils.isEmpty(outMsg)) {
+            return;
+        }
+
+        switch (logLevel) {
+            case INFO: {
+                Log.i(tag, outMsg);
+                break;
+            }
+            case DEBUG: {
+                Log.d(tag, outMsg);
+                break;
+            }
+            case ERROR: {
+                Log.e(tag, outMsg);
+                break;
+            }
+        }
+    }
+
+    public static String getTraceMsg(String msg, int depth) {
         // getStackTrace的数组0为当前线程的栈顶，3为调用printByDepth的方法，
         StackTraceElement caller = null;
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
@@ -78,23 +100,7 @@ public class LogUtils {
                 break;
             }
         }
-        if (caller == null) {
-            return;
-        }
-        switch (logLevel) {
-            case INFO: {
-                Log.i(tag, generateMsg(caller, msg));
-                break;
-            }
-            case DEBUG: {
-                Log.d(tag, generateMsg(caller, msg));
-                break;
-            }
-            case ERROR: {
-                Log.e(tag, generateMsg(caller, msg));
-                break;
-            }
-        }
+        return generateMsg(caller, msg);
     }
 
     /**

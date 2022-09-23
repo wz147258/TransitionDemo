@@ -1,21 +1,17 @@
 package com.sflin.transitiondemo
 
 import android.annotation.TargetApi
-import android.app.ActivityOptions
 import android.os.Build
 import android.os.Bundle
-import android.transition.ChangeTransform
 import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
-import com.sflin.transitiondemo.utis.MySharedElementCallback
-import kotlinx.android.synthetic.main.activity_after_two.*
+import com.sflin.transitiondemo.utis.BaseSharedElementCallbackWrapper
+import kotlinx.android.synthetic.main.activity_after_two.img
 
 class ShareElementTwoActivityV2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +20,14 @@ class ShareElementTwoActivityV2 : AppCompatActivity() {
 
             findViewById<View>(android.R.id.content).transitionName = intent.getStringExtra("transitionName")
 
-            setEnterSharedElementCallback(MySharedElementCallback("B:Enter", MaterialContainerTransformSharedElementCallback()))
-            setExitSharedElementCallback(MySharedElementCallback("B:Exit"))
+            setEnterSharedElementCallback(
+                BaseSharedElementCallbackWrapper(
+                    true,
+                    "B:Enter",
+                    MaterialContainerTransformSharedElementCallback()
+                )
+            )
+            setExitSharedElementCallback(BaseSharedElementCallbackWrapper(false, "B:Exit"))
 
             window.sharedElementEnterTransition = MaterialContainerTransform().apply {
                 addTarget(android.R.id.content)

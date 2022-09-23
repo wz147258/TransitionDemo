@@ -3,7 +3,11 @@ package com.sflin.transitiondemo
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.after
+import kotlinx.android.synthetic.main.activity_main.before
+import kotlinx.android.synthetic.main.activity_main.share_element
+import kotlinx.android.synthetic.main.activity_main.share_element_2
+import kotlinx.android.synthetic.main.activity_main.share_element_3
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +28,9 @@ class MainActivity : AppCompatActivity() {
         }
         share_element_2.setOnClickListener {
             startActivity(Intent(this@MainActivity, ShareElementActivityV2::class.java))
+        }
+        share_element_3.setOnClickListener {
+            startActivity(Intent(this@MainActivity, ShareElementActivityV3::class.java))
         }
     }
 }

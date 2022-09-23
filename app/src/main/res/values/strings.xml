@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">TransitionDemo</string>
+    <string name="item_text">自助餐:
+主荤：杭椒牛柳，干炸小黄鱼
+半荤：芹菜肉丝，鸡丝鱼香茄条
+素菜：醋溜白菜，蒜蓉菊花菜
+风味小吃：素盒子
+    </string>
 </resources>
