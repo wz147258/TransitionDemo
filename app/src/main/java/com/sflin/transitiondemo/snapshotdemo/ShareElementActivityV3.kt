@@ -1,4 +1,4 @@
-package com.sflin.transitiondemo
+package com.sflin.transitiondemo.snapshotdemo
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -9,7 +9,7 @@ import android.view.Window
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
+import com.sflin.transitiondemo.R
 import com.sflin.transitiondemo.adapter.ShareElementListAdapterV3
 import com.sflin.transitiondemo.databinding.ActivityShareElementV3Binding
 import com.sflin.transitiondemo.utis.BaseSharedElementCallbackWrapper
@@ -26,15 +26,10 @@ class ShareElementActivityV3 : AppCompatActivity() {
             // Attach a callback used to capture the shared elements from this Activity to be used
             // by the container transform transition
             setEnterSharedElementCallback(BaseSharedElementCallbackWrapper(true, "A:Enter"))
-            setExitSharedElementCallback(
-                BaseSharedElementCallbackWrapper(
-                    false,
-                    "A:Exit", MaterialContainerTransformSharedElementCallback()
-                )
-            )
+            setExitSharedElementCallback(BaseSharedElementCallbackWrapper(false, "A:Exit"))
 
             // Keep system bars (status bar, navigation bar) persistent throughout the transition.
-            window.sharedElementsUseOverlay = false
+//            window.sharedElementsUseOverlay = false
         }
         super.onCreate(savedInstanceState)
         binding = ActivityShareElementV3Binding.inflate(layoutInflater)

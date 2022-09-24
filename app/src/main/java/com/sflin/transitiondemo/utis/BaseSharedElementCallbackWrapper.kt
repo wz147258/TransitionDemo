@@ -13,9 +13,9 @@ import androidx.annotation.RequiresApi
 open class BaseSharedElementCallbackWrapper constructor(isEnter: Boolean, val tag: String, val oriCallback: SharedElementCallback? = null) :
     BaseSharedElementCallback(isEnter) {
     override fun onSharedElementStart(
-        sharedElementNames: MutableList<String>?,
-        sharedElements: MutableList<View>?,
-        sharedElementSnapshots: MutableList<View>?
+        sharedElementNames: MutableList<String>,
+        sharedElements: MutableList<View>,
+        sharedElementSnapshots: MutableList<View>
     ) {
         oriCallback?.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots)
         super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots)
@@ -23,9 +23,9 @@ open class BaseSharedElementCallbackWrapper constructor(isEnter: Boolean, val ta
     }
 
     override fun onSharedElementEnd(
-        sharedElementNames: MutableList<String>?,
-        sharedElements: MutableList<View>?,
-        sharedElementSnapshots: MutableList<View>?
+        sharedElementNames: MutableList<String>,
+        sharedElements: MutableList<View>,
+        sharedElementSnapshots: MutableList<View>
     ) {
         oriCallback?.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
         super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)

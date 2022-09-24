@@ -36,11 +36,12 @@ class ShareElementListAdapterV3(private val mContext: Context, private val mList
             .load(url)
             .apply(RequestOptions().skipMemoryCache(true))
             .into(holder.binding.itemImg)
-        holder.binding.itemImg.setOnClickListener {
-            mOnCallBack.onClick(holder.binding.itemImg, url)
-        }
 
         holder.binding.itemTv.text = "position:$position,${holder.binding.root.resources.getString(R.string.item_text)}"
+
+        holder.binding.root.setOnClickListener {
+            mOnCallBack.onClick(it, url)
+        }
     }
 
     override fun getItemCount(): Int {

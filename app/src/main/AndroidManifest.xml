@@ -32,7 +32,7 @@
             android:name=".ShareElementActivityV2"
             android:label="ShareElementActivityV2" />
         <activity
-            android:name=".ShareElementActivityV3"
+            android:name=".snapshotdemo.ShareElementActivityV3"
             android:label="ShareElementActivityV3" />
 
         <activity android:name=".ShareElementTwoActivity" />
@@ -40,7 +40,7 @@
             android:name=".ShareElementTwoActivityV2"
             android:label="ShareElementTwoActivityV2" />
         <activity
-            android:name=".ShareElementTwoActivityV3"
+            android:name=".snapshotdemo.ShareElementTwoActivityV3"
             android:label="ShareElementTwoActivityV3" />
 
         <activity android:name=".ShareElementThreeActivity" />

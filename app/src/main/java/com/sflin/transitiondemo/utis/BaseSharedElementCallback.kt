@@ -67,9 +67,9 @@ open class BaseSharedElementCallback(val isEnter: Boolean) : SharedElementCallba
 
     @CallSuper
     override fun onSharedElementStart(
-        sharedElementNames: MutableList<String>?,
-        sharedElements: MutableList<View>?,
-        sharedElementSnapshots: MutableList<View>?
+        sharedElementNames: MutableList<String>,
+        sharedElements: MutableList<View>,
+        sharedElementSnapshots: MutableList<View>
     ) {
         state = if (isEnter) {
             if (step == STEP_START) STATE_CALLED_ENTER else STATE_CALLED_RETURN
@@ -81,9 +81,9 @@ open class BaseSharedElementCallback(val isEnter: Boolean) : SharedElementCallba
 
     @CallSuper
     override fun onSharedElementEnd(
-        sharedElementNames: MutableList<String>?,
-        sharedElements: MutableList<View>?,
-        sharedElementSnapshots: MutableList<View>?
+        sharedElementNames: MutableList<String>,
+        sharedElements: MutableList<View>,
+        sharedElementSnapshots: MutableList<View>
     ) {
         state = if (isEnter) {
             if (step == STEP_START) STATE_CALLED_ENTER else STATE_CALLED_RETURN

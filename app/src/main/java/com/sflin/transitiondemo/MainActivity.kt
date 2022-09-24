@@ -3,11 +3,8 @@ package com.sflin.transitiondemo
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.after
-import kotlinx.android.synthetic.main.activity_main.before
-import kotlinx.android.synthetic.main.activity_main.share_element
-import kotlinx.android.synthetic.main.activity_main.share_element_2
-import kotlinx.android.synthetic.main.activity_main.share_element_3
+import com.sflin.transitiondemo.snapshotdemo.ShareElementActivityV3
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
