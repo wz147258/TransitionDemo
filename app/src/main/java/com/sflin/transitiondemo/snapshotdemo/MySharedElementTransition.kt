@@ -68,6 +68,7 @@ class MySharedElementTransition(val isEnter: Boolean) : Transition() {
         }
         val view = endValues.view
         val snapshotView: View? = view.getTag(R.id.tag_snap_shot) as? View
+        view.setTag(R.id.tag_snap_shot, null)
 
         val startBounds: Rect = startValues.values[PROPNAME_BOUNDS] as Rect
         val startScreenPosition: Point = startValues.values[PROPNAME_SCREEN_POSITION] as Point
@@ -75,10 +76,11 @@ class MySharedElementTransition(val isEnter: Boolean) : Transition() {
         val endBounds: Rect = endValues.values[PROPNAME_BOUNDS] as Rect
         val endScreenPosition: Point = endValues.values[PROPNAME_SCREEN_POSITION] as Point
 
-        val animator = ValueAnimator.ofFloat(0f, 1f)!!
+        val animator = ValueAnimator.ofFloat(0f, 1f)
+
         // 1.snapshot
         if (snapshotView != null) {
-            // 1.
+            // 1.overlay
             (sceneRoot.overlay as ViewGroupOverlay).add(snapshotView)
             // 2.fadeOut, scale
             val startSnapshotAlpha = 1f
@@ -123,7 +125,6 @@ class MySharedElementTransition(val isEnter: Boolean) : Transition() {
 
                     // remove snapshotView
                     (sceneRoot.overlay as ViewGroupOverlay).remove(snapshotView)
-                    view.setTag(R.id.tag_snap_shot, null)
                 }
             })
             animator.addUpdateListener {
@@ -201,7 +202,137 @@ class MySharedElementTransition(val isEnter: Boolean) : Transition() {
         if (startValues?.view == null || endValues?.view == null) {
             return null
         }
+        val view = endValues.view
+        val snapshotView: View? = view.getTag(R.id.tag_snap_shot) as? View
+        view.setTag(R.id.tag_snap_shot, null)
 
-        return null
+        val startBounds: Rect = startValues.values[PROPNAME_BOUNDS] as Rect
+        val startScreenPosition: Point = startValues.values[PROPNAME_SCREEN_POSITION] as Point
+
+        val endBounds: Rect = endValues.values[PROPNAME_BOUNDS] as Rect
+        val endScreenPosition: Point = endValues.values[PROPNAME_SCREEN_POSITION] as Point
+
+        val animator = ValueAnimator.ofFloat(0f, 1f)
+
+        // 1.snapshot
+        if (snapshotView != null) {
+            // 1.overlay
+            (sceneRoot.overlay as ViewGroupOverlay).add(snapshotView)
+
+            // 2.fadeOut, scale
+            val startSnapshotAlpha = 0f
+            val endSnapshotAlpha = 1f
+
+            val startSnapshotTranslation = Point(startBounds.left - endBounds.left, startBounds.top - endBounds.top)
+            val endSnapshotTranslation = Point(0, 0)
+
+            val snapshotPivotX = 0f
+            val snapshotPivotY = 0f
+            val startSnapshotScale = startBounds.width() * 1f / endBounds.width()
+            val endSnapshotScale = 1f
+
+            animator.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animation: Animator?) {
+                    snapshotView.alpha = startSnapshotAlpha
+
+                    snapshotView.translationX = startSnapshotTranslation.x.toFloat()
+                    snapshotView.translationY = startSnapshotTranslation.y.toFloat()
+
+
+                    snapshotView.pivotX = snapshotPivotX
+                    snapshotView.pivotY = snapshotPivotY
+                    snapshotView.scaleX = startSnapshotScale
+                    snapshotView.scaleY = startSnapshotScale
+                }
+
+                override fun onAnimationCancel(animation: Animator?) {
+                }
+
+                override fun onAnimationEnd(animation: Animator?) {
+                    snapshotView.alpha = endSnapshotAlpha
+
+                    snapshotView.translationX = endSnapshotTranslation.x.toFloat()
+                    snapshotView.translationY = endSnapshotTranslation.y.toFloat()
+
+                    snapshotView.scaleX = endSnapshotScale
+                    snapshotView.scaleY = endSnapshotScale
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        snapshotView.resetPivot()
+                    }
+
+                    // remove snapshotView
+//                    (sceneRoot.overlay as ViewGroupOverlay).remove(snapshotView)
+                }
+            })
+            animator.addUpdateListener {
+                val value = it.animatedValue as Float
+                snapshotView.alpha = startSnapshotAlpha + (endSnapshotAlpha - startSnapshotAlpha) * value
+
+                snapshotView.translationX =
+                    startSnapshotTranslation.x + (endSnapshotTranslation.x - startSnapshotTranslation.x) * value
+                snapshotView.translationY =
+                    startSnapshotTranslation.y + (endSnapshotTranslation.y - startSnapshotTranslation.y) * value
+
+                snapshotView.scaleX = startSnapshotScale + (endSnapshotScale - startSnapshotScale) * value
+                snapshotView.scaleY = snapshotView.scaleX
+            }
+        }
+
+        // 2.view
+        val startViewAlpha = 1f
+        val endViewAlpha = 0f
+
+        val startViewTranslation = Point(0, 0)
+        val endViewTranslation = Point(endBounds.left - startBounds.left, endBounds.top - startBounds.top)
+
+        val viewPivotX = 0f
+        val viewPivotY = 0f
+        val startViewScale = 1f
+        val endViewScale = endBounds.width() * 1f / startBounds.width()
+
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator?) {
+                val widthSpec = View.MeasureSpec.makeMeasureSpec(startBounds.width(), View.MeasureSpec.EXACTLY)
+                val heightSpec = View.MeasureSpec.makeMeasureSpec(startBounds.height(), View.MeasureSpec.EXACTLY)
+                view.measure(widthSpec, heightSpec)
+                view.layout(startBounds.left, startBounds.top, startBounds.right, startBounds.bottom)
+
+                view.alpha = startViewAlpha
+
+                view.translationX = startViewTranslation.x.toFloat()
+                view.translationY = startViewTranslation.y.toFloat()
+
+                view.pivotX = viewPivotX
+                view.pivotY = viewPivotY
+                view.scaleX = startViewScale
+                view.scaleY = startViewScale
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                view.alpha = endViewAlpha
+
+                view.translationX = endViewTranslation.x.toFloat()
+                view.translationY = endViewTranslation.y.toFloat()
+
+                view.scaleX = endViewScale
+                view.scaleY = endViewScale
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    view.resetPivot()
+                }
+            }
+        })
+        animator.addUpdateListener {
+            val value = it.animatedValue as Float
+            view.alpha = startViewAlpha + (endViewAlpha - startViewAlpha) * value
+
+            view.translationX = startViewTranslation.x + (endViewTranslation.x - startViewTranslation.x) * value
+            view.translationY = startViewTranslation.y + (endViewTranslation.y - startViewTranslation.y) * value
+
+            view.scaleX = startViewScale + (endViewScale - startViewScale) * value
+            view.scaleY = view.scaleX
+        }
+
+        return animator
     }
 }

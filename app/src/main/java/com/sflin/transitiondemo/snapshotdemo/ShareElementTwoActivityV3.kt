@@ -38,6 +38,7 @@ class ShareElementTwoActivityV3 : AppCompatActivity() {
             }
             window.sharedElementReturnTransition = MySharedElementTransition(false).also {
                 it.addTarget(binding.root)
+                it.duration = 300L
             }
             postponeEnterTransition()
         }
