@@ -11,6 +11,9 @@
 
 
     <style name="AppThemeMain" parent="AppTheme">
+    </style>
 
+    <style name="TransparentTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/transparent</item>
     </style>
 </resources>

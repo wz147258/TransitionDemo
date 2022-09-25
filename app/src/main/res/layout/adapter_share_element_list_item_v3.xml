@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginHorizontal="4dp"
     android:layout_height="wrap_content"
     android:layout_marginBottom="1dp"
     android:orientation="vertical">
@@ -11,12 +13,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
+        app:layout_constraintTop_toTopOf="parent"
         tools:src="@mipmap/img1" />
 
     <TextView
         android:id="@+id/item_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_img"
         tools:text="@string/item_text" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/item_bt1"
+        android:text="item_bt1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/item_bt2"
+        app:layout_constraintTop_toBottomOf="@id/item_tv" />
+
+    <Button
+        android:id="@+id/item_bt2"
+        android:text="item_bt1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/item_bt1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_tv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.sflin.transitiondemo.R
 import com.sflin.transitiondemo.databinding.AdapterShareElementListItemV3Binding
+import com.sflin.transitiondemo.model.ItemData
 
-class ShareElementListAdapterV3(private val mContext: Context, private val mList: List<Int>) :
+class ShareElementListAdapterV3 constructor(private val mContext: Context, private val mList: List<ItemData>) :
     RecyclerView.Adapter<ShareElementListAdapterV3.ViewHolder>() {
 
     private lateinit var mOnCallBack: OnCallBack
@@ -31,16 +31,17 @@ class ShareElementListAdapterV3(private val mContext: Context, private val mList
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val url = mList[position]
+        val itemData = mList[position]
         Glide.with(mContext)
-            .load(url)
+            .load(itemData.resId)
             .apply(RequestOptions().skipMemoryCache(true))
             .into(holder.binding.itemImg)
 
-        holder.binding.itemTv.text = "position:$position,${holder.binding.root.resources.getString(R.string.item_text)}"
+        holder.binding.itemTv.text = itemData.text
 
+        holder.binding.root.setBackgroundColor(itemData.bgColor)
         holder.binding.root.setOnClickListener {
-            mOnCallBack.onClick(it, url)
+            mOnCallBack.onClick(it, itemData.resId)
         }
     }
 

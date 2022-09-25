@@ -31,6 +31,9 @@ class ShareElementTwoActivityV3 : AppCompatActivity() {
         setContentView(binding.root)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.enterTransition = null
+            window.exitTransition = null
+
             binding.root.transitionName = intent.getStringExtra("transitionName")
             window.sharedElementEnterTransition = MySharedElementTransition(true).also {
                 it.addTarget(binding.root)
@@ -40,6 +43,7 @@ class ShareElementTwoActivityV3 : AppCompatActivity() {
                 it.addTarget(binding.root)
                 it.duration = 300L
             }
+            window.sharedElementExitTransition = null
             postponeEnterTransition()
         }
 
