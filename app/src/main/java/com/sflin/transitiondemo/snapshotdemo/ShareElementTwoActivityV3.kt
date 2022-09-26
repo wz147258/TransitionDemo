@@ -38,11 +38,11 @@ class ShareElementTwoActivityV3 : AppCompatActivity() {
             window.exitTransition = null
 
             binding.root.transitionName = intent.getStringExtra("transitionName")
-            window.sharedElementEnterTransition = MySharedElementTransition(true).also {
+            window.sharedElementEnterTransition = MySharedElementTransitionV2(true).also {
                 it.addTarget(binding.root)
                 it.duration = 300L
             }
-            window.sharedElementReturnTransition = MySharedElementTransition(false).also {
+            window.sharedElementReturnTransition = MySharedElementTransitionV2(false).also {
                 it.addTarget(binding.root)
                 it.duration = 300L
             }
@@ -85,7 +85,7 @@ class ShareElementTwoActivityV3 : AppCompatActivity() {
             .into(binding.img)
 
         presenter = ActExitGesturePresenter(this).also {
-            it.enableDragChangeBgAlpha = true
+//            it.enableDragChangeBgAlpha = true
             it.initGestureListener(
                 targetView = binding.root,
                 dragListener = object : ActExitGestureFrameLayout.DragListener.DragListenerStub() {
