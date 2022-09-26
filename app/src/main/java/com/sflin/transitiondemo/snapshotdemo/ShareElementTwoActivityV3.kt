@@ -13,11 +13,14 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.sflin.transitiondemo.databinding.ActivityShareElementTwoV2Binding
+import com.sflin.transitiondemo.view.ActExitGestureFrameLayout
+import com.sflin.transitiondemo.view.ActExitGesturePresenter
 
 class ShareElementTwoActivityV3 : AppCompatActivity() {
 
     private lateinit var binding: ActivityShareElementTwoV2Binding
     private val viewContent: ViewGroup by lazy { findViewById(android.R.id.content) }
+    private var presenter: ActExitGesturePresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -80,5 +83,34 @@ class ShareElementTwoActivityV3 : AppCompatActivity() {
                 }
             })
             .into(binding.img)
+
+        presenter = ActExitGesturePresenter(this).also {
+            it.enableDragChangeBgAlpha = true
+            it.initGestureListener(
+                targetView = binding.root,
+                dragListener = object : ActExitGestureFrameLayout.DragListener.DragListenerStub() {
+                    override fun canDrag(): Boolean {
+                        return true
+                    }
+
+                    override fun canDragRight(): Boolean {
+                        return true
+                    }
+
+                    override fun canDragDown(): Boolean {
+                        return true
+                    }
+
+                    override fun triggerExit(): Boolean {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            finishAfterTransition()
+                        } else {
+                            finish()
+                        }
+                        return true
+                    }
+                }
+            )
+        }
     }
 }
