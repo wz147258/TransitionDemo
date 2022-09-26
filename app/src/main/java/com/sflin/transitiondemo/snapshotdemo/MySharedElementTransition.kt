@@ -13,6 +13,9 @@ import android.view.ViewGroup
 import android.view.ViewGroupOverlay
 import com.sflin.transitiondemo.R
 
+/**
+ * 使用snapshot和overlay
+ */
 class MySharedElementTransition(val isEnter: Boolean) : Transition() {
 
     companion object {

@@ -12,6 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.sflin.transitiondemo.R
 
+/**
+ * 使用snapshot，添加到view布局中
+ */
 class MySharedElementTransitionV2(val isEnter: Boolean) : Transition() {
 
     companion object {
