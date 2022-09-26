@@ -210,42 +210,13 @@ class MySharedElementTransitionV2(val isEnter: Boolean) : Transition() {
             val startSnapshotAlpha = 0f
             val endSnapshotAlpha = 1f
 
-            /*val startSnapshotTranslation = Point(startBounds.left - endBounds.left, startBounds.top - endBounds.top)
-            val endSnapshotTranslation = Point(0, 0)
-
-            val snapshotPivotX = 0f
-            val snapshotPivotY = 0f
-            val startSnapshotScale = startBounds.width() * 1f / endBounds.width()
-            val endSnapshotScale = 1f*/
-
             animator.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
                     snapshotView.alpha = startSnapshotAlpha
-
-                    /*snapshotView.translationX = startSnapshotTranslation.x.toFloat()
-                    snapshotView.translationY = startSnapshotTranslation.y.toFloat()
-
-
-                    snapshotView.pivotX = snapshotPivotX
-                    snapshotView.pivotY = snapshotPivotY
-                    snapshotView.scaleX = startSnapshotScale
-                    snapshotView.scaleY = startSnapshotScale*/
-                }
-
-                override fun onAnimationCancel(animation: Animator?) {
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
                     snapshotView.alpha = endSnapshotAlpha
-
-                    /*snapshotView.translationX = endSnapshotTranslation.x.toFloat()
-                    snapshotView.translationY = endSnapshotTranslation.y.toFloat()
-
-                    snapshotView.scaleX = endSnapshotScale
-                    snapshotView.scaleY = endSnapshotScale
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                        snapshotView.resetPivot()
-                    }*/
 
                     // remove snapshotView
 //                    (view as? ViewGroup)?.removeView(snapshotView)
@@ -254,14 +225,6 @@ class MySharedElementTransitionV2(val isEnter: Boolean) : Transition() {
             animator.addUpdateListener {
                 val value = it.animatedValue as Float
                 snapshotView.alpha = startSnapshotAlpha + (endSnapshotAlpha - startSnapshotAlpha) * value
-
-                /*snapshotView.translationX =
-                    startSnapshotTranslation.x + (endSnapshotTranslation.x - startSnapshotTranslation.x) * value
-                snapshotView.translationY =
-                    startSnapshotTranslation.y + (endSnapshotTranslation.y - startSnapshotTranslation.y) * value
-
-                snapshotView.scaleX = startSnapshotScale + (endSnapshotScale - startSnapshotScale) * value
-                snapshotView.scaleY = snapshotView.scaleX*/
             }
         }
 
