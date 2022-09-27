@@ -5,18 +5,19 @@ import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
 import android.view.Window
-import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.sflin.transitiondemo.BaseTransitionActivity
 import com.sflin.transitiondemo.databinding.ActivityShareElementTwoV2Binding
+import com.sflin.transitiondemo.utis.BaseSharedElementCallbackWrapper
 import com.sflin.transitiondemo.view.ActExitGestureFrameLayout
 import com.sflin.transitiondemo.view.ActExitGesturePresenter
 
-class ShareElementTwoActivityV3 : AppCompatActivity() {
+class ShareElementTwoActivityV3 : BaseTransitionActivity() {
 
     private lateinit var binding: ActivityShareElementTwoV2Binding
     private val viewContent: ViewGroup by lazy { findViewById(android.R.id.content) }
@@ -25,8 +26,12 @@ class ShareElementTwoActivityV3 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-            setEnterSharedElementCallback(SnapshotSharedElementCallback(true, "B:Enter"))
-            setExitSharedElementCallback(SnapshotSharedElementCallback(false, "B:Exit"))
+            setEnterSharedElementCallback(
+                BaseSharedElementCallbackWrapper(true, "B:Enter", SnapshotSharedElementCallback(true))
+            )
+            setExitSharedElementCallback(
+                BaseSharedElementCallbackWrapper(false, "B:Exit", SnapshotSharedElementCallback(false))
+            )
         }
         super.onCreate(savedInstanceState)
 
@@ -38,11 +43,11 @@ class ShareElementTwoActivityV3 : AppCompatActivity() {
             window.exitTransition = null
 
             binding.root.transitionName = intent.getStringExtra("transitionName")
-            window.sharedElementEnterTransition = MySharedElementTransition(true).also {
+            window.sharedElementEnterTransition = SnapshotSharedElementTransition(true).also {
                 it.addTarget(binding.root)
                 it.duration = 300L
             }
-            window.sharedElementReturnTransition = MySharedElementTransition(false).also {
+            window.sharedElementReturnTransition = SnapshotSharedElementTransition(false).also {
                 it.addTarget(binding.root)
                 it.duration = 300L
             }

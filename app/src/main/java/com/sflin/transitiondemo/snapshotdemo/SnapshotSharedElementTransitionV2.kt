@@ -15,7 +15,7 @@ import com.sflin.transitiondemo.R
 /**
  * 使用snapshot，添加到view布局中
  */
-class MySharedElementTransitionV2(val isEnter: Boolean) : Transition() {
+class SnapshotSharedElementTransitionV2(val isEnter: Boolean) : Transition() {
 
     companion object {
         private const val PROPNAME_BOUNDS = "MySharedElementTransition:bounds"

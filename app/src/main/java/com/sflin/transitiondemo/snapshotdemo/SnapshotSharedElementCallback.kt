@@ -4,10 +4,10 @@ import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresApi
 import com.sflin.transitiondemo.R
-import com.sflin.transitiondemo.utis.BaseSharedElementCallbackWrapper
+import com.sflin.transitiondemo.utis.BaseSharedElementCallback
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class SnapshotSharedElementCallback(isEnter: Boolean, tag: String) : BaseSharedElementCallbackWrapper(isEnter, tag) {
+class SnapshotSharedElementCallback constructor(isEnter: Boolean) : BaseSharedElementCallback(isEnter) {
     override fun onSharedElementStart(
         sharedElementNames: MutableList<String>,
         sharedElements: MutableList<View>,

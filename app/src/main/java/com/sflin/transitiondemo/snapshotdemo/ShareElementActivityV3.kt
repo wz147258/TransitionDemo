@@ -8,14 +8,14 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.sflin.transitiondemo.BaseTransitionActivity
 import com.sflin.transitiondemo.R
 import com.sflin.transitiondemo.adapter.ShareElementListAdapterV3
 import com.sflin.transitiondemo.databinding.ActivityShareElementV3Binding
 import com.sflin.transitiondemo.model.ItemData
 
-class ShareElementActivityV3 : AppCompatActivity() {
+class ShareElementActivityV3 : BaseTransitionActivity() {
     private lateinit var binding: ActivityShareElementV3Binding
     private lateinit var mListData: ArrayList<ItemData>
 

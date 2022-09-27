@@ -17,7 +17,7 @@ import kotlin.math.min
 /**
  * 使用snapshot和overlay
  */
-class MySharedElementTransition(val isEnter: Boolean) : Transition() {
+class SnapshotSharedElementTransition(val isEnter: Boolean) : Transition() {
 
     companion object {
         private const val PROPNAME_BOUNDS = "MySharedElementTransition:bounds"
