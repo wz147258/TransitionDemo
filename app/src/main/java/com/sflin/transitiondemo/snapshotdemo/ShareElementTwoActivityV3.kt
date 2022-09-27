@@ -38,11 +38,11 @@ class ShareElementTwoActivityV3 : AppCompatActivity() {
             window.exitTransition = null
 
             binding.root.transitionName = intent.getStringExtra("transitionName")
-            window.sharedElementEnterTransition = MySharedElementTransitionV2(true).also {
+            window.sharedElementEnterTransition = MySharedElementTransition(true).also {
                 it.addTarget(binding.root)
                 it.duration = 300L
             }
-            window.sharedElementReturnTransition = MySharedElementTransitionV2(false).also {
+            window.sharedElementReturnTransition = MySharedElementTransition(false).also {
                 it.addTarget(binding.root)
                 it.duration = 300L
             }
