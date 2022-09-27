@@ -6,6 +6,7 @@ import android.app.ActivityOptions
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
+import com.sflin.transitiondemo.R
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
@@ -23,10 +24,13 @@ class ActExitGesturePresenter constructor(private val activity: Activity) {
 
     private var mTranslucentConversionListenerClass: Class<*>? = null
     private var mTranslucentConversionListener: Any? = null
-    var enableDragChangeBgAlpha = false
 
     @JvmOverloads
-    fun initGestureListener(targetView: View? = null, dragListener: ActExitGestureFrameLayout.DragListener) {
+    fun initGestureListener(
+        targetView: View? = null,
+        dragListener: ActExitGestureFrameLayout.DragListener,
+        config: (ActExitGestureFrameLayout.() -> Unit)? = null
+    ) {
         if (gestureLayout != null) {
             return
         }
@@ -43,7 +47,6 @@ class ActExitGesturePresenter constructor(private val activity: Activity) {
         val rootViewIndexInParent = rootParent.indexOfChild(rootView)
 
         val gestureLayout = ActExitGestureFrameLayout(activity).also {
-            it.enableDragChangeBgAlpha = enableDragChangeBgAlpha
             it.dragListener = dragListener
             it.translucentListener = object : ActExitGestureFrameLayout.TranslucentListener {
                 override fun isTranslucent(): Boolean = transformStartSlide
@@ -56,6 +59,7 @@ class ActExitGesturePresenter constructor(private val activity: Activity) {
                     this@ActExitGesturePresenter.convertFromTranslucent()
                 }
             }
+            config?.invoke(it)
         }
 
         val rootViewLP =
@@ -181,8 +185,6 @@ class ActExitGesturePresenter constructor(private val activity: Activity) {
         if (!completed || moveView == null) {
             return
         }
-//        if (!enableDragChangeBgAlpha) {
-//            activity.window.setBackgroundDrawableResource(R.color.transparent)
-//        }
+        activity.window.setBackgroundDrawableResource(R.color.transparent)
     }
 }

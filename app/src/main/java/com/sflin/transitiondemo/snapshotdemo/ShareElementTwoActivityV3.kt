@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
 import android.view.Window
+import androidx.customview.widget.ViewDragHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -91,7 +92,6 @@ class ShareElementTwoActivityV3 : BaseTransitionActivity() {
             .into(binding.img)
 
         presenter = ActExitGesturePresenter(this).also {
-            it.enableDragChangeBgAlpha = true
             it.initGestureListener(
                 targetView = binding.root,
                 dragListener = object : ActExitGestureFrameLayout.DragListener.DragListenerStub() {
@@ -104,7 +104,7 @@ class ShareElementTwoActivityV3 : BaseTransitionActivity() {
                     }
 
                     override fun canDragDown(): Boolean {
-                        return true
+                        return false
                     }
 
                     override fun triggerExit(): Boolean {
@@ -115,6 +115,10 @@ class ShareElementTwoActivityV3 : BaseTransitionActivity() {
                         }
                         return true
                     }
+                },
+                config = {
+                    enableDragChangeBgAlpha = true
+                    mTrackingEdges = ViewDragHelper.EDGE_LEFT
                 }
             )
         }
