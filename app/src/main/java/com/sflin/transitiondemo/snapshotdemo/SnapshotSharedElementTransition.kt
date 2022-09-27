@@ -3,14 +3,18 @@ package com.sflin.transitiondemo.snapshotdemo
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
+import android.graphics.Color
 import android.graphics.Point
 import android.graphics.RectF
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.transition.Transition
 import android.transition.TransitionValues
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroupOverlay
+import androidx.core.math.MathUtils.clamp
 import com.sflin.transitiondemo.R
 import kotlin.math.min
 
@@ -28,6 +32,8 @@ class SnapshotSharedElementTransition(val isEnter: Boolean) : Transition() {
             PROPNAME_SCREEN_POSITION
         )
     }
+
+    var enableReturnFadeOutBg = false
 
     private val tempArray = IntArray(2)
 
@@ -65,7 +71,11 @@ class SnapshotSharedElementTransition(val isEnter: Boolean) : Transition() {
         return if (isEnter) {
             createEnterAnimator(sceneRoot, startValues, endValues)
         } else {
-            createReturnAnimator(sceneRoot, startValues, endValues)
+            createReturnAnimator(sceneRoot, startValues, endValues)?.also {
+                if (it is ValueAnimator && enableReturnFadeOutBg) {
+                    processReturnFadeOutBg(sceneRoot, startValues, endValues, it)
+                }
+            }
         }
     }
 
@@ -429,5 +439,43 @@ class SnapshotSharedElementTransition(val isEnter: Boolean) : Transition() {
         }
 
         return animator
+    }
+
+    private fun processReturnFadeOutBg(
+        sceneRoot: ViewGroup,
+        startValues: TransitionValues?,
+        endValues: TransitionValues?,
+        animator: ValueAnimator
+    ) {
+        val parent = endValues?.view?.parent as? ViewGroup ?: return
+        val background: Drawable = if (parent.background == null) {
+            ColorDrawable(Color.BLACK).apply {
+                parent.background = this
+            }
+        } else {
+            parent.background.mutate().apply {
+                if (this != parent.background) {
+                    parent.background = this
+                }
+            }
+        }
+
+        val startAlpha = background.alpha / 255f
+        val endAlpha = 0f
+
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator?) {
+                background.alpha = (clamp(startAlpha, 0f, 1f) * 255).toInt()
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                background.alpha = (clamp(endAlpha, 0f, 1f) * 255).toInt()
+            }
+        })
+        animator.addUpdateListener {
+            val value = it.animatedValue as Float
+            val currentAlpha = startAlpha + (endAlpha - startAlpha) * value
+            background.alpha = (clamp(currentAlpha, 0f, 1f) * 255).toInt()
+        }
     }
 }

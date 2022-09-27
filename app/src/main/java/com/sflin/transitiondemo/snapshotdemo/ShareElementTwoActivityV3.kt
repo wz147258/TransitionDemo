@@ -48,6 +48,7 @@ class ShareElementTwoActivityV3 : BaseTransitionActivity() {
                 it.duration = 300L
             }
             window.sharedElementReturnTransition = SnapshotSharedElementTransition(false).also {
+                it.enableReturnFadeOutBg = true
                 it.addTarget(binding.root)
                 it.duration = 300L
             }
@@ -90,7 +91,7 @@ class ShareElementTwoActivityV3 : BaseTransitionActivity() {
             .into(binding.img)
 
         presenter = ActExitGesturePresenter(this).also {
-//            it.enableDragChangeBgAlpha = true
+            it.enableDragChangeBgAlpha = true
             it.initGestureListener(
                 targetView = binding.root,
                 dragListener = object : ActExitGestureFrameLayout.DragListener.DragListenerStub() {

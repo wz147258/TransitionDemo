@@ -6,7 +6,6 @@ import android.app.ActivityOptions
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
-import com.sflin.transitiondemo.R
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
@@ -182,8 +181,8 @@ class ActExitGesturePresenter constructor(private val activity: Activity) {
         if (!completed || moveView == null) {
             return
         }
-        if (!enableDragChangeBgAlpha) {
-            activity.window.setBackgroundDrawableResource(R.color.transparent)
-        }
+//        if (!enableDragChangeBgAlpha) {
+//            activity.window.setBackgroundDrawableResource(R.color.transparent)
+//        }
     }
 }
