@@ -1,10 +1,17 @@
 package com.sflin.transitiondemo.snapshotdemo
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.transition.TransitionValues
 import android.view.ViewGroup
 import android.view.Window
+import androidx.core.math.MathUtils
 import androidx.customview.widget.ViewDragHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -49,9 +56,9 @@ class ShareElementTwoActivityV3 : BaseTransitionActivity() {
                 it.duration = 300L
             }
             window.sharedElementReturnTransition = SnapshotSharedElementTransition(false).also {
-                it.enableReturnFadeOutBg = true
                 it.addTarget(binding.root)
                 it.duration = 300L
+                it.returnAnimConfig = ::returnAnimConfig
             }
             window.sharedElementExitTransition = null
             postponeEnterTransition()
@@ -121,6 +128,45 @@ class ShareElementTwoActivityV3 : BaseTransitionActivity() {
                     mTrackingEdges = ViewDragHelper.EDGE_LEFT
                 }
             )
+        }
+    }
+
+    private fun returnAnimConfig(
+        sceneRoot: ViewGroup,
+        startValues: TransitionValues?,
+        endValues: TransitionValues?,
+        animator: ValueAnimator
+    ) {
+        val parent = binding.root.parent as? ViewGroup ?: return
+
+        val background: Drawable = if (parent.background == null) {
+            ColorDrawable(Color.BLACK).apply {
+                parent.background = this
+            }
+        } else {
+            parent.background.mutate().apply {
+                if (this != parent.background) {
+                    parent.background = this
+                }
+            }
+        }
+
+        val startAlpha = background.alpha / 255f
+        val endAlpha = 0f
+
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator?) {
+                background.alpha = (MathUtils.clamp(startAlpha, 0f, 1f) * 255).toInt()
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                background.alpha = (MathUtils.clamp(endAlpha, 0f, 1f) * 255).toInt()
+            }
+        })
+        animator.addUpdateListener {
+            val value = it.animatedValue as Float
+            val currentAlpha = startAlpha + (endAlpha - startAlpha) * value
+            background.alpha = (MathUtils.clamp(currentAlpha, 0f, 1f) * 255).toInt()
         }
     }
 }
