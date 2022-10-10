@@ -2,10 +2,12 @@ package com.sflin.transitiondemo.snapshotdemo
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.animation.RectEvaluator
 import android.animation.ValueAnimator
 import android.graphics.Matrix
 import android.graphics.Point
 import android.graphics.PointF
+import android.graphics.Rect
 import android.graphics.RectF
 import android.os.Build
 import android.transition.Transition
@@ -32,6 +34,8 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
             PROPNAME_BOUNDS,
             PROPNAME_SCREEN_POSITION
         )
+
+        private val sRectEvaluator = RectEvaluator()
     }
 
     var returnAnimConfig: ((
@@ -332,6 +336,10 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
         val startViewScale = visualStartBounds.width() / startBounds.width()
         val endViewScale = visualEndBounds.width() * 1f / startBounds.width()
 
+        val startClipBounds = view.clipBounds ?: Rect(0, 0, startBounds.width().toInt(), startBounds.height().toInt())
+        val endClipBounds =
+            Rect(0, 0, startBounds.width().toInt(), min((visualEndBounds.height() / endViewScale), startBounds.height()).toInt())
+
         animator.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
                 val widthSpec = View.MeasureSpec.makeMeasureSpec(startBounds.width().toInt(), View.MeasureSpec.EXACTLY)
@@ -348,6 +356,8 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
                 view.pivotY = viewPivotY
                 view.scaleX = startViewScale
                 view.scaleY = startViewScale
+
+                view.clipBounds = startClipBounds
             }
 
             override fun onAnimationEnd(animation: Animator?) {
@@ -358,6 +368,8 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
 
                 view.scaleX = endViewScale
                 view.scaleY = endViewScale
+
+                view.clipBounds = endClipBounds
             }
         })
         animator.addUpdateListener {
@@ -369,6 +381,8 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
 
             view.scaleX = startViewScale + (endViewScale - startViewScale) * value
             view.scaleY = view.scaleX
+
+            view.clipBounds = sRectEvaluator.evaluate(value, startClipBounds, endClipBounds)
         }
 
         return animator
