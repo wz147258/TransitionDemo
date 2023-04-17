@@ -112,4 +112,8 @@ class AfterActivity : AppCompatActivity() {
     private fun getEffect(name: String, url: Int): Effect {
         return Effect(name, url)
     }
+
+    override fun overridePendingTransition(enterAnim: Int, exitAnim: Int) {
+        super.overridePendingTransition(enterAnim, exitAnim)
+    }
 }

@@ -350,7 +350,7 @@ class ActExitGestureFrameLayout : FrameLayout {
         ).apply {
             duration = DRAGGING_RECOVER_ANIM_DURATION
             addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
                     resetViewPivot(view)
                     if (tempBg != null) {

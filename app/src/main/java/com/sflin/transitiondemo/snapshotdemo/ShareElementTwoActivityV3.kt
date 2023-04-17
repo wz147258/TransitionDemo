@@ -155,11 +155,11 @@ class ShareElementTwoActivityV3 : BaseTransitionActivity() {
         val endAlpha = 0f
 
         animator.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationStart(animation: Animator?) {
+            override fun onAnimationStart(animation: Animator) {
                 background.alpha = (MathUtils.clamp(startAlpha, 0f, 1f) * 255).toInt()
             }
 
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 background.alpha = (MathUtils.clamp(endAlpha, 0f, 1f) * 255).toInt()
             }
         })

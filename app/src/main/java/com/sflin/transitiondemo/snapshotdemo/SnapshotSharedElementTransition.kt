@@ -127,7 +127,7 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
             val endSnapshotScale = endBounds.width() * 1f / startBounds.width()
 
             animator.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationStart(animation: Animator?) {
+                override fun onAnimationStart(animation: Animator) {
                     // 1.overlay
                     (sceneRoot.overlay as ViewGroupOverlay).add(snapshotView)
 
@@ -143,10 +143,7 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
                     snapshotView.scaleY = startSnapshotScale
                 }
 
-                override fun onAnimationCancel(animation: Animator?) {
-                }
-
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     snapshotView.alpha = endSnapshotAlpha
 
                     snapshotView.translationX = endSnapshotTranslation.x.toFloat()
@@ -187,7 +184,7 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
         val endViewScale = 1f
 
         animator.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationStart(animation: Animator?) {
+            override fun onAnimationStart(animation: Animator) {
                 view.alpha = startViewAlpha
 
                 view.translationX = startViewTranslation.x.toFloat()
@@ -199,7 +196,7 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
                 view.scaleY = startViewScale
             }
 
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 view.alpha = endViewAlpha
 
                 view.translationX = endViewTranslation.x.toFloat()
@@ -284,7 +281,7 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
             val endSnapshotScale = 1f
 
             animator.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationStart(animation: Animator?) {
+                override fun onAnimationStart(animation: Animator) {
                     // 1.overlay
                     (sceneRoot.overlay as ViewGroupOverlay).add(snapshotView)
 
@@ -300,7 +297,7 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
                     snapshotView.scaleY = startSnapshotScale
                 }
 
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     snapshotView.alpha = endSnapshotAlpha
 
                     snapshotView.translationX = endSnapshotTranslation.x.toFloat()
@@ -341,7 +338,7 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
             Rect(0, 0, startBounds.width().toInt(), min((visualEndBounds.height() / endViewScale), startBounds.height()).toInt())
 
         animator.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationStart(animation: Animator?) {
+            override fun onAnimationStart(animation: Animator) {
                 val widthSpec = View.MeasureSpec.makeMeasureSpec(startBounds.width().toInt(), View.MeasureSpec.EXACTLY)
                 val heightSpec = View.MeasureSpec.makeMeasureSpec(startBounds.height().toInt(), View.MeasureSpec.EXACTLY)
                 view.measure(widthSpec, heightSpec)
@@ -360,7 +357,7 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
                 view.clipBounds = startClipBounds
             }
 
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 view.alpha = endViewAlpha
 
                 view.translationX = endViewTranslation.x.toFloat()
@@ -426,7 +423,7 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
         val animator = ValueAnimator.ofFloat(0f, 1f)
 
         animator.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationStart(animation: Animator?) {
+            override fun onAnimationStart(animation: Animator) {
                 val widthSpec = View.MeasureSpec.makeMeasureSpec(startBounds.width().toInt(), View.MeasureSpec.EXACTLY)
                 val heightSpec = View.MeasureSpec.makeMeasureSpec(startBounds.height().toInt(), View.MeasureSpec.EXACTLY)
                 view.measure(widthSpec, heightSpec)
@@ -443,7 +440,7 @@ class SnapshotSharedElementTransition constructor(val isEnter: Boolean) : Transi
                 view.scaleY = startViewScale
             }
 
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 view.alpha = endViewAlpha
 
                 view.translationX = endViewTranslation.x.toFloat()
