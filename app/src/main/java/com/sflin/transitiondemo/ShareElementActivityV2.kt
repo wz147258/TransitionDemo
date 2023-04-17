@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_share_element.img5
 import kotlinx.android.synthetic.main.activity_share_element.img6
 import kotlinx.android.synthetic.main.activity_share_element.list
 
-class ShareElementActivityV2 : AppCompatActivity() {
+class ShareElementActivityV2 : BaseTraditionalActivity() {
 
     private lateinit var mListData: ArrayList<Int>
 

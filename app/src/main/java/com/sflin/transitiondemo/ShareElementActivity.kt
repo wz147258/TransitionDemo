@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_share_element.img5
 import kotlinx.android.synthetic.main.activity_share_element.img6
 import kotlinx.android.synthetic.main.activity_share_element.list
 
-class ShareElementActivity : AppCompatActivity() {
+class ShareElementActivity : BaseTraditionalActivity() {
 
     private lateinit var mListData: ArrayList<Int>
 
@@ -90,5 +89,9 @@ class ShareElementActivity : AppCompatActivity() {
                 transitionActivityOptions.toBundle()
             )
         }
+    }
+
+    override fun finishAfterTransition() {
+        finish()
     }
 }

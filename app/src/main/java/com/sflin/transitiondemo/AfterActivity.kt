@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_after.list
 import java.io.Serializable
 
 
-class AfterActivity : AppCompatActivity() {
+class AfterActivity : BaseTraditionalActivity() {
 
     private lateinit var mListData: ArrayList<Effect>
 
@@ -48,6 +47,7 @@ class AfterActivity : AppCompatActivity() {
                             ).toBundle()
                         )
                     }
+
                     "makeScaleUp" -> {
                         val options = ActivityOptionsCompat.makeScaleUpAnimation(
                             view, view.width / 2,
@@ -60,6 +60,7 @@ class AfterActivity : AppCompatActivity() {
 
                         }, options.toBundle())
                     }
+
                     "makeThumbnailScaleUp" -> {
                         var bitmap = BitmapFactory.decodeResource(resources, effect.uri)
                         val options = ActivityOptionsCompat.makeThumbnailScaleUpAnimation(
@@ -73,6 +74,7 @@ class AfterActivity : AppCompatActivity() {
 
                         }, options.toBundle())
                     }
+
                     "makeClipReveal" -> {
                         val options = ActivityOptionsCompat.makeClipRevealAnimation(
                             view, view.width / 2,
@@ -85,6 +87,7 @@ class AfterActivity : AppCompatActivity() {
 
                         }, options.toBundle())
                     }
+
                     else -> {
                         startActivity(Intent(this@AfterActivity, AfterTwoActivity::class.java).apply {
                             putExtra("effect", effect as Serializable)
@@ -113,7 +116,4 @@ class AfterActivity : AppCompatActivity() {
         return Effect(name, url)
     }
 
-    override fun overridePendingTransition(enterAnim: Int, exitAnim: Int) {
-        super.overridePendingTransition(enterAnim, exitAnim)
-    }
 }

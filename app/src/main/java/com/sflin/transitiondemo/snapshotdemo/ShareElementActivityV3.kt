@@ -9,13 +9,13 @@ import android.view.View
 import android.view.Window
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
-import com.sflin.transitiondemo.BaseTransitionActivity
+import com.sflin.transitiondemo.BaseTraditionalActivity
 import com.sflin.transitiondemo.R
 import com.sflin.transitiondemo.adapter.ShareElementListAdapterV3
 import com.sflin.transitiondemo.databinding.ActivityShareElementV3Binding
 import com.sflin.transitiondemo.model.ItemData
 
-class ShareElementActivityV3 : BaseTransitionActivity() {
+class ShareElementActivityV3 : BaseTraditionalActivity() {
     private lateinit var binding: ActivityShareElementV3Binding
     private lateinit var mListData: ArrayList<ItemData>
 
